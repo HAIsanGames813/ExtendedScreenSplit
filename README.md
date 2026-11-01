@@ -1,3 +1,4 @@
+<img width="1920" height="1080" alt="グループ制御中のアイテムで画面分割(拡張)" src="https://github.com/user-attachments/assets/571e7dbc-3c31-466d-9895-1739f5b82154" />  
 # グループ制御中のアイテムで画面分割（拡張）
 制作者:HAIsan
 
@@ -22,6 +23,7 @@
 MIT License
 
 ---
+<img width="1920" height="1080" alt="ExtendedScreenSplit" src="https://github.com/user-attachments/assets/56c1b157-b8fc-4b29-abe1-18f5e384f80d" />  
 
 # ExtendedScreenSplit
 Author: HAIsan
