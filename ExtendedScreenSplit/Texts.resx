@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+<data name="CurrentCulture" xml:space="preserve"><value>ja-jp</value></data>
+<data name="EffectName" xml:space="preserve"><value>グループ制御中のアイテムで画面分割(拡張)</value></data>
+<data name="EffectDescription" xml:space="preserve"><value>グループ制御中のアイテムを分割して配置します</value></data>
+<data name="TagSplit" xml:space="preserve"><value>分割</value></data>
+<data name="TagGroup" xml:space="preserve"><value>グループ</value></data>
+<data name="TagMask" xml:space="preserve"><value>マスク</value></data>
+<data name="ModeCircular" xml:space="preserve"><value>円状</value></data>
+<data name="ModeLinear" xml:space="preserve"><value>線状</value></data>
+<data name="ModeGrid" xml:space="preserve"><value>グリッド</value></data>
+<data name="UnitPixelDegree" xml:space="preserve"><value>ピクセル/度</value></data>
+<data name="UnitProportion" xml:space="preserve"><value>割合</value></data>
+<data name="UnitPixel" xml:space="preserve"><value>ピクセル</value></data>
+<data name="AlignLeft" xml:space="preserve"><value>左</value></data>
+<data name="AlignCenter" xml:space="preserve"><value>中央</value></data>
+<data name="AlignRight" xml:space="preserve"><value>右</value></data>
+<data name="SplitAlignment" xml:space="preserve"><value>基準</value></data>
+<data name="SplitGroup" xml:space="preserve"><value>分割</value></data>
+<data name="BorderGroup" xml:space="preserve"><value>縁</value></data>
+<data name="BorderDrawGroup" xml:space="preserve"><value>縁/描画</value></data>
+<data name="BorderPatternGroup" xml:space="preserve"><value>縁/模様</value></data>
+<data name="GridGroup" xml:space="preserve"><value>グリッド</value></data>
+<data name="ItemGroup" xml:space="preserve"><value>アイテム</value></data>
+<data name="SplitCount" xml:space="preserve"><value>分割数</value></data>
+<data name="ArrangementOffset" xml:space="preserve"><value>並びオフセット</value></data>
+<data name="ArrangementOffsetDescription" xml:space="preserve"><value>表示するアイテムの開始番号をずらします。分割数を超えたアイテムは表示しません</value></data>
+<data name="ReverseOrder" xml:space="preserve"><value>並び順反転</value></data>
+<data name="CircularTotalAngle" xml:space="preserve"><value>全体角度</value></data>
+<data name="TotalWidth" xml:space="preserve"><value>全体横幅</value></data>
+<data name="TotalWidthDescription" xml:space="preserve"><value>0 px の場合は画面全体の幅を使います</value></data>
+<data name="TotalHeight" xml:space="preserve"><value>全体縦幅</value></data>
+<data name="TotalHeightDescription" xml:space="preserve"><value>0 px の場合は画面全体の高さを使います</value></data>
+<data name="LayoutMode" xml:space="preserve"><value>分割方法</value></data>
+<data name="Alignment" xml:space="preserve"><value>基準</value></data>
+<data name="CenterX" xml:space="preserve"><value>中心X</value></data>
+<data name="CenterY" xml:space="preserve"><value>中心Y</value></data>
+<data name="RotationOffset" xml:space="preserve"><value>回転オフセット</value></data>
+<data name="ShowPlacementNumbers" xml:space="preserve"><value>番号表示</value></data>
+<data name="ShowPlacementNumbersDescription" xml:space="preserve"><value>プレビューに配置先番号を透かし表示します。書き出しには表示されません</value></data>
+<data name="NumberColor" xml:space="preserve"><value>番号の色</value></data>
+<data name="BorderThickness" xml:space="preserve"><value>太さ</value></data>
+<data name="BorderBlur" xml:space="preserve"><value>ぼかし</value></data>
+<data name="OutlineOnly" xml:space="preserve"><value>縁のみ</value></data>
+<data name="BorderX" xml:space="preserve"><value>X</value></data>
+<data name="BorderY" xml:space="preserve"><value>Y</value></data>
+<data name="BorderOpacity" xml:space="preserve"><value>不透明度</value></data>
+<data name="BorderZoom" xml:space="preserve"><value>拡大率</value></data>
+<data name="BorderPattern" xml:space="preserve"><value>模様</value></data>
+<data name="GridRowCount" xml:space="preserve"><value>段数</value></data>
+<data name="GridRowSettings" xml:space="preserve"><value>段ごとの設定</value></data>
+<data name="UseIndividualSettings" xml:space="preserve"><value>個別設定</value></data>
+<data name="AutoCompress" xml:space="preserve"><value>自動圧縮</value></data>
+<data name="AutoCompressDescription" xml:space="preserve"><value>未指定の幅や段の高さを残り領域へ均等に収めます</value></data>
+<data name="ItemSettings" xml:space="preserve"><value>アイテム別設定</value></data>
+<data name="OffsetX" xml:space="preserve"><value>X</value></data>
+<data name="OffsetY" xml:space="preserve"><value>Y</value></data>
+<data name="ZoomPercent" xml:space="preserve"><value>拡大率</value></data>
+<data name="ZoomPercentDescription" xml:space="preserve"><value>100%で元の拡大率を維持します</value></data>
+<data name="Rotation" xml:space="preserve"><value>回転角</value></data>
+<data name="WidthUnit" xml:space="preserve"><value>単位</value></data>
+<data name="CropWidth" xml:space="preserve"><value>分割幅</value></data>
+<data name="ProportionalCropWidth" xml:space="preserve"><value>分割幅</value></data>
+<data name="Columns" xml:space="preserve"><value>列数</value></data>
+<data name="ColumnsDescription" xml:space="preserve"><value>この段に配置する列数</value></data>
+<data name="MaximumWidth" xml:space="preserve"><value>全体幅上限</value></data>
+<data name="MaximumWidthDescription" xml:space="preserve"><value>0 px の場合は全体幅を使います。この段の全体幅上限です</value></data>
+<data name="XOffset" xml:space="preserve"><value>Xオフセット</value></data>
+<data name="XOffsetDescription" xml:space="preserve"><value>この段の横位置をずらします</value></data>
+<data name="RowAlignment" xml:space="preserve"><value>基準</value></data>
+<data name="RowAlignmentDescription" xml:space="preserve"><value>この段を全体幅の左・中央・右のどこにそろえるか</value></data>
+<data name="HeightUnit" xml:space="preserve"><value>縦幅の単位</value></data>
+<data name="HeightPixels" xml:space="preserve"><value>縦幅</value></data>
+<data name="HeightProportion" xml:space="preserve"><value>縦幅</value></data>
+<data name="HeightDescription" xml:space="preserve"><value>0 の場合は自動計算します</value></data>
+<data name="ItemListFormat" xml:space="preserve"><value>アイテム {0}</value></data>
+<data name="ItemRemarkTooltip" xml:space="preserve"><value>このアイテムの備考</value></data>
+<data name="RowRemarkTooltip" xml:space="preserve"><value>この段の備考</value></data>
+<data name="ItemGroupFormat" xml:space="preserve"><value>アイテム{0}</value></data>
+<data name="ItemRemarkGroupFormat" xml:space="preserve"><value>アイテム{0}/{1}</value></data>
+<data name="RowGroupFormat" xml:space="preserve"><value>{0}段目</value></data>
+<data name="RowRemarkGroupFormat" xml:space="preserve"><value>{0}段目/{1}</value></data>
+</root>

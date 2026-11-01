@@ -28,6 +28,7 @@ public partial class SplitItemsEditorControl : UserControl, IPropertyEditorContr
     }
 
     public IEnumerable<SplitItemSettings> Items => effect?.ItemSettings ?? [];
+    public string ItemRemarkTooltip => Texts.ItemRemarkTooltip;
 
     public SplitItemSettings? SelectedItem
     {
@@ -47,8 +48,8 @@ public partial class SplitItemsEditorControl : UserControl, IPropertyEditorContr
     public string? SelectedGroupName => SelectedItem is null
         ? null
         : string.IsNullOrWhiteSpace(SelectedItem.Remark)
-            ? $"アイテム{SelectedItem.ItemNumber}"
-            : $"アイテム{SelectedItem.ItemNumber}/{SelectedItem.Remark}";
+            ? string.Format(System.Globalization.CultureInfo.CurrentCulture, Texts.ItemGroupFormat, SelectedItem.ItemNumber)
+            : string.Format(System.Globalization.CultureInfo.CurrentCulture, Texts.ItemRemarkGroupFormat, SelectedItem.ItemNumber, SelectedItem.Remark);
 
     public event EventHandler? BeginEdit;
     public event EventHandler? EndEdit;

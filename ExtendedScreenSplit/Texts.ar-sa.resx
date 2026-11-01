@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+<data name="CurrentCulture" xml:space="preserve"><value>ar-sa</value></data>
+<data name="EffectName" xml:space="preserve"><value>تقسيم شاشة موسع لعناصر المجموعة</value></data>
+<data name="EffectDescription" xml:space="preserve"><value>قسّم العناصر داخل مجموعة ورتبها</value></data>
+<data name="TagSplit" xml:space="preserve"><value>تقسيم</value></data>
+<data name="TagGroup" xml:space="preserve"><value>مجموعة</value></data>
+<data name="TagMask" xml:space="preserve"><value>قناع</value></data>
+<data name="ModeCircular" xml:space="preserve"><value>دائري</value></data>
+<data name="ModeLinear" xml:space="preserve"><value>خطي</value></data>
+<data name="ModeGrid" xml:space="preserve"><value>شبكة</value></data>
+<data name="UnitPixelDegree" xml:space="preserve"><value>بكسل/درجة</value></data>
+<data name="UnitProportion" xml:space="preserve"><value>نسبة</value></data>
+<data name="UnitPixel" xml:space="preserve"><value>بكسل</value></data>
+<data name="AlignLeft" xml:space="preserve"><value>يسار</value></data>
+<data name="AlignCenter" xml:space="preserve"><value>وسط</value></data>
+<data name="AlignRight" xml:space="preserve"><value>يمين</value></data>
+<data name="SplitAlignment" xml:space="preserve"><value>المرجع</value></data>
+<data name="SplitGroup" xml:space="preserve"><value>تقسيم</value></data>
+<data name="BorderGroup" xml:space="preserve"><value>حد</value></data>
+<data name="BorderDrawGroup" xml:space="preserve"><value>حد/رسم</value></data>
+<data name="BorderPatternGroup" xml:space="preserve"><value>حد/نمط</value></data>
+<data name="GridGroup" xml:space="preserve"><value>شبكة</value></data>
+<data name="ItemGroup" xml:space="preserve"><value>عنصر</value></data>
+<data name="SplitCount" xml:space="preserve"><value>عدد الأقسام</value></data>
+<data name="ArrangementOffset" xml:space="preserve"><value>إزاحة الترتيب</value></data>
+<data name="ArrangementOffsetDescription" xml:space="preserve"><value>يغيّر بداية العناصر المعروضة. تُخفى العناصر التي تتجاوز الخانات المتاحة</value></data>
+<data name="ReverseOrder" xml:space="preserve"><value>عكس الترتيب</value></data>
+<data name="CircularTotalAngle" xml:space="preserve"><value>الزاوية الكلية</value></data>
+<data name="TotalWidth" xml:space="preserve"><value>العرض الأفقي الكلي</value></data>
+<data name="TotalWidthDescription" xml:space="preserve"><value>يستخدم عرض الشاشة بالكامل عند ضبطه على 0 px</value></data>
+<data name="TotalHeight" xml:space="preserve"><value>الارتفاع الرأسي الكلي</value></data>
+<data name="TotalHeightDescription" xml:space="preserve"><value>يستخدم ارتفاع الشاشة بالكامل عند ضبطه على 0 px</value></data>
+<data name="LayoutMode" xml:space="preserve"><value>التخطيط</value></data>
+<data name="Alignment" xml:space="preserve"><value>المحاذاة</value></data>
+<data name="CenterX" xml:space="preserve"><value>المركز X</value></data>
+<data name="CenterY" xml:space="preserve"><value>المركز Y</value></data>
+<data name="RotationOffset" xml:space="preserve"><value>إزاحة الدوران</value></data>
+<data name="ShowPlacementNumbers" xml:space="preserve"><value>إظهار أرقام المواضع</value></data>
+<data name="ShowPlacementNumbersDescription" xml:space="preserve"><value>يعرض أرقام المواضع فوق المعاينة ولا تظهر في التصدير</value></data>
+<data name="NumberColor" xml:space="preserve"><value>لون الرقم</value></data>
+<data name="BorderThickness" xml:space="preserve"><value>السماكة</value></data>
+<data name="BorderBlur" xml:space="preserve"><value>تمويه</value></data>
+<data name="OutlineOnly" xml:space="preserve"><value>الحد فقط</value></data>
+<data name="BorderX" xml:space="preserve"><value>X</value></data>
+<data name="BorderY" xml:space="preserve"><value>Y</value></data>
+<data name="BorderOpacity" xml:space="preserve"><value>العتامة</value></data>
+<data name="BorderZoom" xml:space="preserve"><value>التحجيم</value></data>
+<data name="BorderPattern" xml:space="preserve"><value>نمط</value></data>
+<data name="GridRowCount" xml:space="preserve"><value>عدد الصفوف</value></data>
+<data name="GridRowSettings" xml:space="preserve"><value>إعدادات الصف</value></data>
+<data name="UseIndividualSettings" xml:space="preserve"><value>إعدادات فردية</value></data>
+<data name="AutoCompress" xml:space="preserve"><value>ضغط تلقائي</value></data>
+<data name="AutoCompressDescription" xml:space="preserve"><value>يوزّع العروض وارتفاعات الصفوف غير المحددة بالتساوي على المساحة المتبقية</value></data>
+<data name="ItemSettings" xml:space="preserve"><value>إعدادات لكل عنصر</value></data>
+<data name="OffsetX" xml:space="preserve"><value>X</value></data>
+<data name="OffsetY" xml:space="preserve"><value>Y</value></data>
+<data name="ZoomPercent" xml:space="preserve"><value>التحجيم</value></data>
+<data name="ZoomPercentDescription" xml:space="preserve"><value>تحافظ 100% على المقياس الأصلي</value></data>
+<data name="Rotation" xml:space="preserve"><value>زاوية الدوران</value></data>
+<data name="WidthUnit" xml:space="preserve"><value>الوحدة</value></data>
+<data name="CropWidth" xml:space="preserve"><value>عرض الخانة</value></data>
+<data name="ProportionalCropWidth" xml:space="preserve"><value>عرض الخانة</value></data>
+<data name="Columns" xml:space="preserve"><value>عدد الأعمدة</value></data>
+<data name="ColumnsDescription" xml:space="preserve"><value>عدد الأعمدة في هذا الصف</value></data>
+<data name="MaximumWidth" xml:space="preserve"><value>الحد الأقصى للعرض الكلي</value></data>
+<data name="MaximumWidthDescription" xml:space="preserve"><value>الحد الأقصى للعرض الكلي لهذا الصف. يستخدم عرض التخطيط عند ضبطه على 0 px</value></data>
+<data name="XOffset" xml:space="preserve"><value>إزاحة X</value></data>
+<data name="XOffsetDescription" xml:space="preserve"><value>يغيّر الموضع الأفقي لهذا الصف</value></data>
+<data name="RowAlignment" xml:space="preserve"><value>المحاذاة</value></data>
+<data name="RowAlignmentDescription" xml:space="preserve"><value>يحاذي هذا الصف إلى يسار العرض الكلي أو وسطه أو يمينه</value></data>
+<data name="HeightUnit" xml:space="preserve"><value>وحدة الارتفاع</value></data>
+<data name="HeightPixels" xml:space="preserve"><value>الارتفاع</value></data>
+<data name="HeightProportion" xml:space="preserve"><value>الارتفاع</value></data>
+<data name="HeightDescription" xml:space="preserve"><value>يُحسب تلقائيًا عند ضبطه على 0</value></data>
+<data name="ItemListFormat" xml:space="preserve"><value>العنصر {0}</value></data>
+<data name="ItemRemarkTooltip" xml:space="preserve"><value>ملاحظة هذا العنصر</value></data>
+<data name="RowRemarkTooltip" xml:space="preserve"><value>ملاحظة هذا الصف</value></data>
+<data name="ItemGroupFormat" xml:space="preserve"><value>العنصر {0}</value></data>
+<data name="ItemRemarkGroupFormat" xml:space="preserve"><value>العنصر {0}/{1}</value></data>
+<data name="RowGroupFormat" xml:space="preserve"><value>الصف {0}</value></data>
+<data name="RowRemarkGroupFormat" xml:space="preserve"><value>الصف {0}/{1}</value></data>
+</root>

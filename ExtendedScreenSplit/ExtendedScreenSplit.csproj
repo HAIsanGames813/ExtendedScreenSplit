@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+		<RootNamespace>YMM4.ExtendedScreenSplit</RootNamespace>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
@@ -10,6 +11,13 @@
 		<RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\'))</RepoRoot>
 		<PathMap>$(RepoRoot)=.</PathMap>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\YukkuriMovieMaker.Generator\YukkuriMovieMaker.Generator\YukkuriMovieMaker.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+		<AdditionalFiles Include="**/*.csv" />
+	</ItemGroup>
+
+	<Import Project="..\YukkuriMovieMaker.Generator\YukkuriMovieMaker.Generator.targets" />
 
 	<ItemGroup>
 		<Reference Include="YukkuriMovieMaker.Controls">
@@ -35,8 +43,17 @@
 		</Reference>
 	</ItemGroup>
 
-	<!--ビルド後にYMM4のプラグインフォルダにdllをコピーする-->
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="mkdir &quot;$(YMM4DirPath)user\plugin\$(ProjectName)&quot; &gt; NUL 2&gt;&amp;1&#xD;&#xA;copy &quot;$(TargetPath)&quot; &quot;$(YMM4DirPath)user\plugin\$(ProjectName)\&quot;" />
+	<!--ビルド後にYMM4のプラグインフォルダへ本体と多言語リソースDLLをコピーする-->
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(SkipPluginDeploy)' != 'true'">
+		<PropertyGroup>
+			<PluginOutputDirectory>$(YMM4DirPath)user\plugin\$(ProjectName)\</PluginOutputDirectory>
+		</PropertyGroup>
+		<ItemGroup>
+			<LocalizationResourceDll Include="$(TargetDir)**\*.resources.dll" />
+		</ItemGroup>
+		<MakeDir Directories="$(PluginOutputDirectory)" />
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(PluginOutputDirectory)" />
+		<MakeDir Directories="@(LocalizationResourceDll->'$(PluginOutputDirectory)%(RecursiveDir)')" />
+		<Copy SourceFiles="@(LocalizationResourceDll)" DestinationFiles="@(LocalizationResourceDll->'$(PluginOutputDirectory)%(RecursiveDir)%(Filename)%(Extension)')" />
 	</Target>
 </Project>

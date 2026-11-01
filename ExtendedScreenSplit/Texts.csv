@@ -1,0 +1,80 @@
+Key,comment,ja-jp,en-us,zh-cn,zh-tw,ko-kr,es-es,ar-sa,id-id
+EffectName,,グループ制御中のアイテムで画面分割(拡張),Extended Screen Split for Group Items,群组项目扩展分屏,群組項目擴充分割,그룹 아이템 확장 화면 분할,División de pantalla ampliada para elementos de grupo,تقسيم شاشة موسع لعناصر المجموعة,Pembagian Layar Lanjutan untuk Item Grup
+EffectDescription,,グループ制御中のアイテムを分割して配置します,Split and arrange items inside a group control,分割并排列组控制中的项目,分割並排列群組控制中的項目,그룹 제어 안의 아이템을 나누어 배치합니다,Divide y organiza los elementos dentro de un grupo,قسّم العناصر داخل مجموعة ورتبها,Membagi dan mengatur item di dalam kontrol grup
+TagSplit,,分割,Split,分割,分割,분할,División,تقسيم,Pembagian
+TagGroup,,グループ,Group,群组,群組,그룹,Grupo,مجموعة,Grup
+TagMask,,マスク,Mask,蒙版,遮罩,마스크,Máscara,قناع,Mask
+ModeCircular,,円状,Circular,圆形,圓形,원형,Circular,دائري,Melingkar
+ModeLinear,,線状,Linear,线形,線形,선형,Lineal,خطي,Linear
+ModeGrid,,グリッド,Grid,网格,網格,그리드,Cuadrícula,شبكة,Kisi
+UnitPixelDegree,,ピクセル/度,Pixels/Degrees,像素/度,像素/度,픽셀/도,Píxeles/Grados,بكسل/درجة,Piksel/Derajat
+UnitProportion,,割合,Percentage,百分比,百分比,비율,Porcentaje,نسبة,Persentase
+UnitPixel,,ピクセル,Pixels,像素,像素,픽셀,Píxeles,بكسل,Piksel
+AlignLeft,,左,Left,左,左,왼쪽,Izquierda,يسار,Kiri
+AlignCenter,,中央,Center,居中,置中,가운데,Centro,وسط,Tengah
+AlignRight,,右,Right,右,右,오른쪽,Derecha,يمين,Kanan
+SplitAlignment,,基準,Alignment,对齐基准,對齊基準,기준,Referencia,المرجع,Referensi
+SplitGroup,,分割,Split,分割,分割,분할,División,تقسيم,Pembagian
+BorderGroup,,縁,Border,边框,邊框,테두리,Borde,حد,Batas
+BorderDrawGroup,,縁/描画,Border/Drawing,边框/绘制,邊框/繪製,테두리/그리기,Borde/Dibujo,حد/رسم,Batas/Gambar
+BorderPatternGroup,,縁/模様,Border/Pattern,边框/图案,邊框/圖樣,테두리/무늬,Borde/Patrón,حد/نمط,Batas/Pola
+GridGroup,,グリッド,Grid,网格,網格,그리드,Cuadrícula,شبكة,Kisi
+ItemGroup,,アイテム,Item,项目,項目,아이템,Elemento,عنصر,Item
+SplitCount,,分割数,Split count,分割数,分割數,분할 수,Número de divisiones,عدد الأقسام,Jumlah pembagian
+ArrangementOffset,,並びオフセット,Arrangement offset,排列偏移,排列偏移,배열 오프셋,Desplazamiento de disposición,إزاحة الترتيب,Offset susunan
+ArrangementOffsetDescription,,表示するアイテムの開始番号をずらします。分割数を超えたアイテムは表示しません,Shifts the first visible item. Items beyond the available slots are hidden,更改首个显示项目。超出可用分割数的项目将隐藏,變更第一個顯示項目。超出可用分割數的項目會隱藏,표시할 첫 아이템을 이동합니다. 분할 수를 넘는 아이템은 숨깁니다,Desplaza el primer elemento visible. Los elementos que superen las divisiones disponibles se ocultan,يغيّر بداية العناصر المعروضة. تُخفى العناصر التي تتجاوز الخانات المتاحة,Menggeser item pertama yang tampil. Item yang melebihi slot yang tersedia disembunyikan
+ReverseOrder,,並び順反転,Reverse order,反转顺序,反轉順序,순서 반전,Invertir orden,عكس الترتيب,Balik urutan
+CircularTotalAngle,,全体角度,Total angle,总角度,總角度,전체 각도,Ángulo total,الزاوية الكلية,Sudut total
+TotalWidth,,全体横幅,Total horizontal width,总横向宽度,總橫向寬度,전체 가로 너비,Ancho horizontal total,العرض الأفقي الكلي,Lebar horizontal total
+TotalWidthDescription,,0 px の場合は画面全体の幅を使います,Uses the full screen width when set to 0 px,设为 0 px 时使用整个画面宽度,設為 0 px 時使用整個畫面寬度,0 px이면 화면 전체 너비를 사용합니다,Usa todo el ancho de pantalla si se establece en 0 px,يستخدم عرض الشاشة بالكامل عند ضبطه على 0 px,Menggunakan seluruh lebar layar jika diatur ke 0 px
+TotalHeight,,全体縦幅,Total vertical height,总纵向高度,總縱向高度,전체 세로 너비,Altura vertical total,الارتفاع الرأسي الكلي,Tinggi vertikal total
+TotalHeightDescription,,0 px の場合は画面全体の高さを使います,Uses the full screen height when set to 0 px,设为 0 px 时使用整个画面高度,設為 0 px 時使用整個畫面高度,0 px이면 화면 전체 높이를 사용합니다,Usa toda la altura de pantalla si se establece en 0 px,يستخدم ارتفاع الشاشة بالكامل عند ضبطه على 0 px,Menggunakan seluruh tinggi layar jika diatur ke 0 px
+LayoutMode,,分割方法,Layout,布局方式,配置方式,분할 방식,Distribución,التخطيط,Tata letak
+Alignment,,基準,Alignment,对齐基准,對齊基準,기준,Alineación,المحاذاة,Perataan
+CenterX,,中心X,Center X,中心 X,中心 X,중심 X,Centro X,المركز X,Pusat X
+CenterY,,中心Y,Center Y,中心 Y,中心 Y,중심 Y,Centro Y,المركز Y,Pusat Y
+RotationOffset,,回転オフセット,Rotation offset,旋转偏移,旋轉偏移,회전 오프셋,Desplazamiento de rotación,إزاحة الدوران,Offset rotasi
+ShowPlacementNumbers,,番号表示,Show slot numbers,显示位置编号,顯示位置編號,배치 번호 표시,Mostrar números de posición,إظهار أرقام المواضع,Tampilkan nomor posisi
+ShowPlacementNumbersDescription,,プレビューに配置先番号を透かし表示します。書き出しには表示されません,Show destination numbers as an overlay in the preview. They are not included in exports,在预览中叠加显示目标位置编号。导出时不会显示,在預覽中疊加顯示目標位置編號。匯出時不會顯示,미리보기에 배치 번호를 오버레이로 표시합니다. 내보내기에는 포함되지 않습니다,Muestra los números de destino sobre la vista previa. No aparecen en la exportación,يعرض أرقام المواضع فوق المعاينة ولا تظهر في التصدير,Tampilkan nomor tujuan pada pratinjau. Nomor tidak disertakan saat ekspor
+NumberColor,,番号の色,Number color,编号颜色,編號顏色,번호 색상,Color del número,لون الرقم,Warna nomor
+BorderThickness,,太さ,Thickness,粗细,粗細,두께,Grosor,السماكة,Ketebalan
+BorderBlur,,ぼかし,Blur,模糊,模糊,흐림,Desenfoque,تمويه,Kabur
+OutlineOnly,,縁のみ,Border only,仅边框,僅邊框,테두리만,Solo borde,الحد فقط,Batas saja
+BorderX,,X,X,X,X,X,X,X,X
+BorderY,,Y,Y,Y,Y,Y,Y,Y,Y
+BorderOpacity,,不透明度,Opacity,不透明度,不透明度,불투명도,Opacidad,العتامة,Opasitas
+BorderZoom,,拡大率,Scale,缩放,縮放,확대율,Escala,التحجيم,Skala
+BorderPattern,,模様,Pattern,图案,圖樣,무늬,Patrón,نمط,Pola
+GridRowCount,,段数,Number of rows,段数,段數,행 수,Número de filas,عدد الصفوف,Jumlah baris
+GridRowSettings,,段ごとの設定,Row settings,每段设置,每段設定,행별 설정,Ajustes por fila,إعدادات الصف,Setelan per baris
+UseIndividualSettings,,個別設定,Individual settings,单独设置,個別設定,개별 설정,Ajustes individuales,إعدادات فردية,Setelan individual
+AutoCompress,,自動圧縮,Auto-compress,自动压缩,自動壓縮,자동 압축,Compresión automática,ضغط تلقائي,Kompresi otomatis
+AutoCompressDescription,,未指定の幅や段の高さを残り領域へ均等に収めます,Evenly fits unspecified widths and row heights into the remaining area,将未指定的宽度和段高平均分配到剩余区域,將未指定的寬度和段高平均分配至剩餘區域,지정되지 않은 너비와 행 높이를 남은 영역에 균등하게 맞춥니다,Ajusta uniformemente los anchos y alturas de fila sin especificar al espacio restante,يوزّع العروض وارتفاعات الصفوف غير المحددة بالتساوي على المساحة المتبقية,Membagi lebar dan tinggi baris yang belum ditentukan secara merata ke area tersisa
+ItemSettings,,アイテム別設定,Per-item settings,项目单独设置,項目個別設定,아이템별 설정,Ajustes por elemento,إعدادات لكل عنصر,Setelan per item
+OffsetX,,X,X,X,X,X,X,X,X
+OffsetY,,Y,Y,Y,Y,Y,Y,Y,Y
+ZoomPercent,,拡大率,Scale,缩放,縮放,확대율,Escala,التحجيم,Skala
+ZoomPercentDescription,,100%で元の拡大率を維持します,100% keeps the original scale,100% 保持原始缩放,100% 保持原始縮放,100%는 원래 확대율을 유지합니다,100% mantiene la escala original,تحافظ 100% على المقياس الأصلي,100% mempertahankan skala asli
+Rotation,,回転角,Rotation,旋转角,旋轉角,회전 각도,Ángulo de rotación,زاوية الدوران,Sudut rotasi
+WidthUnit,,単位,Unit,单位,單位,단위,Unidad,الوحدة,Satuan
+CropWidth,,分割幅,Slot width,分割宽度,分割寬度,분할 너비,Ancho de división,عرض الخانة,Lebar slot
+ProportionalCropWidth,,分割幅,Slot width,分割宽度,分割寬度,분할 너비,Ancho de división,عرض الخانة,Lebar slot
+Columns,,列数,Number of columns,列数,欄數,열 수,Número de columnas,عدد الأعمدة,Jumlah kolom
+ColumnsDescription,,この段に配置する列数,Number of columns in this row,此段中的列数,此段中的欄數,이 행에 배치할 열 수,Número de columnas de esta fila,عدد الأعمدة في هذا الصف,Jumlah kolom pada baris ini
+MaximumWidth,,全体幅上限,Maximum total width,总宽度上限,總寬度上限,전체 너비 상한,Límite de ancho total,الحد الأقصى للعرض الكلي,Batas lebar total
+MaximumWidthDescription,,0 px の場合は全体幅を使います。この段の全体幅上限です,Maximum total width for this row. Uses the layout width when set to 0 px,此段的总宽度上限。设为 0 px 时使用总宽度,此段的總寬度上限。設為 0 px 時使用總寬度,이 행의 전체 너비 상한입니다. 0 px이면 전체 너비를 사용합니다,Límite de ancho total de esta fila. Usa el ancho del diseño si se establece en 0 px,الحد الأقصى للعرض الكلي لهذا الصف. يستخدم عرض التخطيط عند ضبطه على 0 px,Batas lebar total untuk baris ini. Gunakan lebar tata letak jika diatur ke 0 px
+XOffset,,Xオフセット,X offset,X 偏移,X 偏移,X 오프셋,Desplazamiento X,إزاحة X,Offset X
+XOffsetDescription,,この段の横位置をずらします,Shifts this row horizontally,调整此段的水平位置,調整此段的水平位置,이 행을 가로로 이동합니다,Desplaza esta fila horizontalmente,يغيّر الموضع الأفقي لهذا الصف,Menggeser baris ini secara horizontal
+RowAlignment,,基準,Alignment,对齐基准,對齊基準,기준,Alineación,المحاذاة,Perataan
+RowAlignmentDescription,,この段を全体幅の左・中央・右のどこにそろえるか,Aligns this row to the left center or right of the total width,将此段对齐到总宽度的左侧中间或右侧,將此段對齊至總寬度的左側中間或右側,이 행을 전체 너비의 왼쪽 가운데 오른쪽에 맞춥니다,Alinea esta fila a la izquierda al centro o a la derecha del ancho total,يحاذي هذا الصف إلى يسار العرض الكلي أو وسطه أو يمينه,Menyelaraskan baris ini ke kiri tengah atau kanan dari lebar total
+HeightUnit,,縦幅の単位,Height unit,高度单位,高度單位,높이 단위,Unidad de altura,وحدة الارتفاع,Satuan tinggi
+HeightPixels,,縦幅,Height,高度,高度,높이,Altura,الارتفاع,Tinggi
+HeightProportion,,縦幅,Height,高度,高度,높이,Altura,الارتفاع,Tinggi
+HeightDescription,,0 の場合は自動計算します,Calculated automatically when set to 0,设为 0 时自动计算,設為 0 時自動計算,0이면 자동 계산합니다,Se calcula automáticamente si se establece en 0,يُحسب تلقائيًا عند ضبطه على 0,Dihitung otomatis jika diatur ke 0
+ItemListFormat,,アイテム {0},Item {0},项目 {0},項目 {0},아이템 {0},Elemento {0},العنصر {0},Item {0}
+ItemRemarkTooltip,,このアイテムの備考,Remark for this item,此项目的备注,此項目的備註,이 아이템의 비고,Nota de este elemento,ملاحظة هذا العنصر,Catatan item ini
+RowRemarkTooltip,,この段の備考,Remark for this row,此段的备注,此段的備註,이 행의 비고,Nota de esta fila,ملاحظة هذا الصف,Catatan baris ini
+ItemGroupFormat,,アイテム{0},Item {0},项目 {0},項目 {0},아이템 {0},Elemento {0},العنصر {0},Item {0}
+ItemRemarkGroupFormat,,アイテム{0}/{1},Item {0}/{1},项目 {0}/{1},項目 {0}/{1},아이템 {0}/{1},Elemento {0}/{1},العنصر {0}/{1},Item {0}/{1}
+RowGroupFormat,,{0}段目,Row {0},第 {0} 段,第 {0} 段,{0}행,Fila {0},الصف {0},Baris {0}
+RowRemarkGroupFormat,,{0}段目/{1},Row {0}/{1},第 {0} 段/{1},第 {0} 段/{1},{0}행/{1},Fila {0}/{1},الصف {0}/{1},Baris {0}/{1}

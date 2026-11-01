@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+<data name="CurrentCulture" xml:space="preserve"><value>es-es</value></data>
+<data name="EffectName" xml:space="preserve"><value>División de pantalla ampliada para elementos de grupo</value></data>
+<data name="EffectDescription" xml:space="preserve"><value>Divide y organiza los elementos dentro de un grupo</value></data>
+<data name="TagSplit" xml:space="preserve"><value>División</value></data>
+<data name="TagGroup" xml:space="preserve"><value>Grupo</value></data>
+<data name="TagMask" xml:space="preserve"><value>Máscara</value></data>
+<data name="ModeCircular" xml:space="preserve"><value>Circular</value></data>
+<data name="ModeLinear" xml:space="preserve"><value>Lineal</value></data>
+<data name="ModeGrid" xml:space="preserve"><value>Cuadrícula</value></data>
+<data name="UnitPixelDegree" xml:space="preserve"><value>Píxeles/Grados</value></data>
+<data name="UnitProportion" xml:space="preserve"><value>Porcentaje</value></data>
+<data name="UnitPixel" xml:space="preserve"><value>Píxeles</value></data>
+<data name="AlignLeft" xml:space="preserve"><value>Izquierda</value></data>
+<data name="AlignCenter" xml:space="preserve"><value>Centro</value></data>
+<data name="AlignRight" xml:space="preserve"><value>Derecha</value></data>
+<data name="SplitAlignment" xml:space="preserve"><value>Referencia</value></data>
+<data name="SplitGroup" xml:space="preserve"><value>División</value></data>
+<data name="BorderGroup" xml:space="preserve"><value>Borde</value></data>
+<data name="BorderDrawGroup" xml:space="preserve"><value>Borde/Dibujo</value></data>
+<data name="BorderPatternGroup" xml:space="preserve"><value>Borde/Patrón</value></data>
+<data name="GridGroup" xml:space="preserve"><value>Cuadrícula</value></data>
+<data name="ItemGroup" xml:space="preserve"><value>Elemento</value></data>
+<data name="SplitCount" xml:space="preserve"><value>Número de divisiones</value></data>
+<data name="ArrangementOffset" xml:space="preserve"><value>Desplazamiento de disposición</value></data>
+<data name="ArrangementOffsetDescription" xml:space="preserve"><value>Desplaza el primer elemento visible. Los elementos que superen las divisiones disponibles se ocultan</value></data>
+<data name="ReverseOrder" xml:space="preserve"><value>Invertir orden</value></data>
+<data name="CircularTotalAngle" xml:space="preserve"><value>Ángulo total</value></data>
+<data name="TotalWidth" xml:space="preserve"><value>Ancho horizontal total</value></data>
+<data name="TotalWidthDescription" xml:space="preserve"><value>Usa todo el ancho de pantalla si se establece en 0 px</value></data>
+<data name="TotalHeight" xml:space="preserve"><value>Altura vertical total</value></data>
+<data name="TotalHeightDescription" xml:space="preserve"><value>Usa toda la altura de pantalla si se establece en 0 px</value></data>
+<data name="LayoutMode" xml:space="preserve"><value>Distribución</value></data>
+<data name="Alignment" xml:space="preserve"><value>Alineación</value></data>
+<data name="CenterX" xml:space="preserve"><value>Centro X</value></data>
+<data name="CenterY" xml:space="preserve"><value>Centro Y</value></data>
+<data name="RotationOffset" xml:space="preserve"><value>Desplazamiento de rotación</value></data>
+<data name="ShowPlacementNumbers" xml:space="preserve"><value>Mostrar números de posición</value></data>
+<data name="ShowPlacementNumbersDescription" xml:space="preserve"><value>Muestra los números de destino sobre la vista previa. No aparecen en la exportación</value></data>
+<data name="NumberColor" xml:space="preserve"><value>Color del número</value></data>
+<data name="BorderThickness" xml:space="preserve"><value>Grosor</value></data>
+<data name="BorderBlur" xml:space="preserve"><value>Desenfoque</value></data>
+<data name="OutlineOnly" xml:space="preserve"><value>Solo borde</value></data>
+<data name="BorderX" xml:space="preserve"><value>X</value></data>
+<data name="BorderY" xml:space="preserve"><value>Y</value></data>
+<data name="BorderOpacity" xml:space="preserve"><value>Opacidad</value></data>
+<data name="BorderZoom" xml:space="preserve"><value>Escala</value></data>
+<data name="BorderPattern" xml:space="preserve"><value>Patrón</value></data>
+<data name="GridRowCount" xml:space="preserve"><value>Número de filas</value></data>
+<data name="GridRowSettings" xml:space="preserve"><value>Ajustes por fila</value></data>
+<data name="UseIndividualSettings" xml:space="preserve"><value>Ajustes individuales</value></data>
+<data name="AutoCompress" xml:space="preserve"><value>Compresión automática</value></data>
+<data name="AutoCompressDescription" xml:space="preserve"><value>Ajusta uniformemente los anchos y alturas de fila sin especificar al espacio restante</value></data>
+<data name="ItemSettings" xml:space="preserve"><value>Ajustes por elemento</value></data>
+<data name="OffsetX" xml:space="preserve"><value>X</value></data>
+<data name="OffsetY" xml:space="preserve"><value>Y</value></data>
+<data name="ZoomPercent" xml:space="preserve"><value>Escala</value></data>
+<data name="ZoomPercentDescription" xml:space="preserve"><value>100% mantiene la escala original</value></data>
+<data name="Rotation" xml:space="preserve"><value>Ángulo de rotación</value></data>
+<data name="WidthUnit" xml:space="preserve"><value>Unidad</value></data>
+<data name="CropWidth" xml:space="preserve"><value>Ancho de división</value></data>
+<data name="ProportionalCropWidth" xml:space="preserve"><value>Ancho de división</value></data>
+<data name="Columns" xml:space="preserve"><value>Número de columnas</value></data>
+<data name="ColumnsDescription" xml:space="preserve"><value>Número de columnas de esta fila</value></data>
+<data name="MaximumWidth" xml:space="preserve"><value>Límite de ancho total</value></data>
+<data name="MaximumWidthDescription" xml:space="preserve"><value>Límite de ancho total de esta fila. Usa el ancho del diseño si se establece en 0 px</value></data>
+<data name="XOffset" xml:space="preserve"><value>Desplazamiento X</value></data>
+<data name="XOffsetDescription" xml:space="preserve"><value>Desplaza esta fila horizontalmente</value></data>
+<data name="RowAlignment" xml:space="preserve"><value>Alineación</value></data>
+<data name="RowAlignmentDescription" xml:space="preserve"><value>Alinea esta fila a la izquierda al centro o a la derecha del ancho total</value></data>
+<data name="HeightUnit" xml:space="preserve"><value>Unidad de altura</value></data>
+<data name="HeightPixels" xml:space="preserve"><value>Altura</value></data>
+<data name="HeightProportion" xml:space="preserve"><value>Altura</value></data>
+<data name="HeightDescription" xml:space="preserve"><value>Se calcula automáticamente si se establece en 0</value></data>
+<data name="ItemListFormat" xml:space="preserve"><value>Elemento {0}</value></data>
+<data name="ItemRemarkTooltip" xml:space="preserve"><value>Nota de este elemento</value></data>
+<data name="RowRemarkTooltip" xml:space="preserve"><value>Nota de esta fila</value></data>
+<data name="ItemGroupFormat" xml:space="preserve"><value>Elemento {0}</value></data>
+<data name="ItemRemarkGroupFormat" xml:space="preserve"><value>Elemento {0}/{1}</value></data>
+<data name="RowGroupFormat" xml:space="preserve"><value>Fila {0}</value></data>
+<data name="RowRemarkGroupFormat" xml:space="preserve"><value>Fila {0}/{1}</value></data>
+</root>

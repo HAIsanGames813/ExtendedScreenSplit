@@ -1,3 +1,5 @@
 <Solution>
   <Project Path="ExtendedScreenSplit/ExtendedScreenSplit.csproj" />
+  <Project Path="YukkuriMovieMaker.Generator/YukkuriMovieMaker.Generator/YukkuriMovieMaker.Generator.csproj" />
+  <Project Path="YukkuriMovieMaker.Generator/YukkuriMovieMaker.Generator.Build/YukkuriMovieMaker.Generator.Build.csproj" />
 </Solution>

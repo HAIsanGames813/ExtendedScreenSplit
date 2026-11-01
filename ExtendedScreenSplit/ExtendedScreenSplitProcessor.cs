@@ -16,7 +16,7 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
     private readonly record struct MaskCacheKey(
         float ScreenWidth, float ScreenHeight, int Index, int Count, double Width, int WidthsHash, double TotalWidth, double X, double Y, double Angle,
         SplitLayoutMode Mode, float DrawX, float DrawY, float ZoomX, float ZoomY, float RotationZ,
-        float CenterPointX, float CenterPointY, bool Invert, bool OutlineOnly);
+        float CenterPointX, float CenterPointY, bool Invert, bool OutlineOnly, SplitAlignmentReference Alignment, bool ReverseOrder);
     private readonly record struct OverlayCacheKey(MaskCacheKey Transform, int GroupCount, int SlotCount, int LayoutHash, int ColorArgb);
     private readonly record struct BorderCacheKey(MaskCacheKey Transform, int LineHash, double Thickness, double X, double Y, double Zoom, int BrushTypeHash);
 
@@ -103,15 +103,19 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
         var sourceIndex = description.GroupIndex;
         var screenWidth = (float)description.ScreenSize.Width;
         var screenHeight = (float)description.ScreenSize.Height;
+        var configuredLayoutWidth = item.TotalWidth.GetValue(frame, duration, fps);
+        var layoutWidth = configuredLayoutWidth > 0 && screenWidth > 0 ? Math.Min(configuredLayoutWidth, screenWidth) : screenWidth;
+        var configuredHeight = item.TotalHeight.GetValue(frame, duration, fps);
+        var layoutHeight = configuredHeight > 0 && screenHeight > 0 ? Math.Min(configuredHeight, screenHeight) : screenHeight;
         var rotationOffset = item.RotationOffset.GetValue(frame, duration, fps);
         var autoTotalWidth = layoutMode == SplitLayoutMode.Circular
             ? item.CircularTotalAngle.GetValue(frame, duration, fps)
             : layoutMode == SplitLayoutMode.Grid || screenWidth <= 0 || screenHeight <= 0
-                ? screenWidth
-                : screenWidth * Math.Abs(Math.Cos(rotationOffset * Math.PI / 180.0)) + screenHeight * Math.Abs(Math.Sin(rotationOffset * Math.PI / 180.0));
+                ? layoutWidth
+                : layoutWidth * Math.Abs(Math.Cos(rotationOffset * Math.PI / 180.0)) + layoutHeight * Math.Abs(Math.Sin(rotationOffset * Math.PI / 180.0));
         var configuredTotalWidth = layoutMode == SplitLayoutMode.Circular
             ? autoTotalWidth
-            : item.TotalWidth.GetValue(frame, duration, fps);
+            : configuredLayoutWidth;
         var totalWidth = layoutMode == SplitLayoutMode.Circular
             ? Math.Clamp(configuredTotalWidth, 0, 360)
             : configuredTotalWidth > 0 ? configuredTotalWidth : autoTotalWidth;
@@ -129,7 +133,7 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
             : [];
         var gridRowHeights = layoutMode == SplitLayoutMode.Grid
             ? item.GridRows.Take(item.GridRowCount).Select(row => row.HeightUnit == GridHeightUnit.Proportion
-                ? row.HeightProportion.GetValue(frame, duration, fps) * screenHeight / 100.0
+                ? row.HeightProportion.GetValue(frame, duration, fps) * layoutHeight / 100.0
                 : row.HeightPixels.GetValue(frame, duration, fps)).ToArray()
             : [];
         var count = layoutMode == SplitLayoutMode.Grid
@@ -143,7 +147,7 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
         var arrangementOffsetValue = Math.Round(item.ArrangementOffset.GetValue(frame, duration, fps));
         var offsetRange = hasMoreItemsThanSlots ? groupItemCount : slotCount;
         var arrangementOffset = offsetRange > 0 ? (int)((arrangementOffsetValue % offsetRange + offsetRange) % offsetRange) : 0;
-        var placementIndex = GetCyclicWindowSlotIndex(sourceIndex, arrangementOffset, groupItemCount, slotCount);
+        var placementIndex = GetCyclicWindowSlotIndex(sourceIndex, arrangementOffset, groupItemCount, slotCount, item.ReverseOrder);
         var autoCompress = item.AutoCompress;
         var itemSettingsSnapshot = item.ItemSettings;
         var cropWidths = new double[slotCount];
@@ -151,13 +155,17 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
         {
             for (var destinationSlot = 0; destinationSlot < slotCount; destinationSlot++)
             {
-                var sourceItemIndex = (destinationSlot + arrangementOffset) % groupItemCount;
+                var relativeSlot = item.ReverseOrder ? slotCount - 1 - destinationSlot : destinationSlot;
+                var sourceItemIndex = (relativeSlot + arrangementOffset) % groupItemCount;
                 var setting = GetItemSetting(itemSettingsSnapshot, sourceItemIndex);
                 cropWidths[destinationSlot] = GetIndividualCropWidth(setting, totalWidth, frame, duration, fps);
             }
         }
         var widthsHasher = new HashCode();
         widthsHasher.Add(item.LinearAlignment);
+        widthsHasher.Add(item.ReverseOrder);
+        widthsHasher.Add(layoutWidth);
+        widthsHasher.Add(layoutHeight);
         foreach (var columns in gridColumns) widthsHasher.Add(columns);
         foreach (var maximumWidth in gridMaximumWidths) widthsHasher.Add(maximumWidth);
         foreach (var xOffset in gridXOffsets) widthsHasher.Add(xOffset);
@@ -188,6 +196,8 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
         maskStateHasher.Add(centerY);
         maskStateHasher.Add(rotationOffset);
         maskStateHasher.Add(item.LinearAlignment);
+        maskStateHasher.Add(item.ReverseOrder);
+        maskStateHasher.Add(layoutHeight);
         maskStateHasher.Add(item.UseIndividualSettings);
         maskStateHasher.Add(item.AutoCompress);
         maskStateHasher.Add(item.ShowPlacementNumbers);
@@ -245,7 +255,7 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
                 itemCropWidths = perItemWidths;
             }
             var mask = placementIndex >= 0 && slotCount > 0
-                ? SplitMaskGeometryBuilder.Create(screenWidth, screenHeight, placementIndex, count, cropWidth, centerX, centerY, rotationOffset, layoutMode, gridColumns, itemCropWidths, totalWidth, gridMaximumWidths, gridRowHeights, autoCompress, item.LinearAlignment, gridXOffsets, gridAlignments)
+                ? SplitMaskGeometryBuilder.Create(screenWidth, screenHeight, placementIndex, count, cropWidth, centerX, centerY, rotationOffset, layoutMode, gridColumns, itemCropWidths, totalWidth, gridMaximumWidths, gridRowHeights, autoCompress, item.LinearAlignment, gridXOffsets, gridAlignments, layoutWidth, layoutHeight)
                 : new SplitMaskGeometry([], Vector2.Zero, 0, 0);
             // YMM4 applies Draw after the effect image. Always place the item at
             // the mask center, then inverse-map the screen mask to keep it fixed.
@@ -273,7 +283,7 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
 
             var key = new MaskCacheKey(screenWidth, screenHeight, placementIndex, count, cropWidth, widthsHash, totalWidth, centerX, centerY, rotationOffset,
                 layoutMode, updatedDraw.Draw.X, updatedDraw.Draw.Y, updatedDraw.Zoom.X, updatedDraw.Zoom.Y,
-                updatedDraw.Rotation.Z, updatedDraw.CenterPoint.X, updatedDraw.CenterPoint.Y, updatedDraw.Invert, item.OutlineOnly);
+                updatedDraw.Rotation.Z, updatedDraw.CenterPoint.X, updatedDraw.CenterPoint.Y, updatedDraw.Invert, item.OutlineOnly, item.LinearAlignment, item.ReverseOrder);
             if (lastMaskKey != key)
             {
                 if (TryCreateScreenToSourceTransform(updatedDraw, out var screenToSource))
@@ -288,10 +298,11 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
                 lastMaskKey = key;
             }
             UpdateBorderOverlay(description, updatedDraw, screenWidth, screenHeight, count, slotCount, gridColumns, cropWidths,
-                gridMaximumWidths, gridRowHeights, totalWidth, layoutMode, autoCompress, item.LinearAlignment, gridXOffsets, gridAlignments, frame, duration, fps,
+                gridMaximumWidths, gridRowHeights, totalWidth, layoutMode, autoCompress, item.LinearAlignment, gridXOffsets, gridAlignments, layoutWidth, layoutHeight, frame, duration, fps,
                 centerX, centerY, rotationOffset, key);
             UpdatePlacementOverlay(description, updatedDraw, screenWidth, screenHeight, count, slotCount, gridColumns, cropWidths,
-                gridMaximumWidths, gridRowHeights, totalWidth, layoutMode, autoCompress, item.LinearAlignment, gridXOffsets, gridAlignments, frame, duration, fps, centerX, centerY, rotationOffset, key);
+                gridMaximumWidths, gridRowHeights, totalWidth, layoutMode, autoCompress, item.LinearAlignment, gridXOffsets, gridAlignments, layoutWidth, layoutHeight, frame, duration, fps,
+                centerX, centerY, rotationOffset, key);
         }
 
         return updatedDraw;
@@ -305,15 +316,19 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
             ? settings[itemNumber]
             : null;
 
-    private static int GetCyclicWindowSlotIndex(int sourceIndex, int offset, int groupItemCount, int slotCount)
+    private static int GetCyclicWindowSlotIndex(int sourceIndex, int offset, int groupItemCount, int slotCount, bool reverseOrder)
     {
         if (groupItemCount <= slotCount)
-            return GetCyclicSlotIndex(sourceIndex, offset, slotCount);
+        {
+            var slot = GetCyclicSlotIndex(sourceIndex, offset, slotCount);
+            return reverseOrder ? slotCount - 1 - slot : slot;
+        }
         if (groupItemCount <= 0 || slotCount <= 0)
             return -1;
 
         var relativeIndex = (int)(((long)sourceIndex - offset % groupItemCount + groupItemCount) % groupItemCount);
-        return relativeIndex < slotCount ? relativeIndex : -1;
+        if (relativeIndex >= slotCount) return -1;
+        return reverseOrder ? slotCount - 1 - relativeIndex : relativeIndex;
     }
 
     private static double GetIndividualCropWidth(SplitItemSettings? settings, double totalWidth, int frame, int duration, int fps)
@@ -333,7 +348,7 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
         int count, int slotCount, IReadOnlyList<int> gridColumns, IReadOnlyList<double> cropWidths,
         IReadOnlyList<double> gridMaximumWidths, IReadOnlyList<double> gridRowHeights, double totalWidth, SplitLayoutMode layoutMode,
         bool autoCompress, SplitAlignmentReference linearAlignment, IReadOnlyList<double> gridXOffsets,
-        IReadOnlyList<SplitAlignmentReference> gridAlignments, int frame, int duration, int fps, double centerX, double centerY, double rotationOffset,
+        IReadOnlyList<SplitAlignmentReference> gridAlignments, double layoutWidth, double layoutHeight, int frame, int duration, int fps, double centerX, double centerY, double rotationOffset,
         MaskCacheKey transformKey)
     {
         var overlaySourceIndex = description.GroupCount == 0 ? 0 : description.GroupCount - 1;
@@ -352,7 +367,7 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
 
         var lines = SplitMaskGeometryBuilder.CreateDividers(screenWidth, screenHeight, count, centerX, centerY,
             rotationOffset, layoutMode, gridColumns, cropWidths, totalWidth, gridMaximumWidths, gridRowHeights, autoCompress,
-            linearAlignment, gridXOffsets, gridAlignments);
+            linearAlignment, gridXOffsets, gridAlignments, layoutWidth, layoutHeight);
         var lineHasher = new HashCode();
         foreach (var line in lines) { lineHasher.Add(line.Start); lineHasher.Add(line.End); }
         var brushType = item.BorderBrush.Type;
@@ -399,7 +414,7 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
         int count, int slotCount, IReadOnlyList<int> gridColumns, IReadOnlyList<double> cropWidths,
         IReadOnlyList<double> gridMaximumWidths, IReadOnlyList<double> gridRowHeights, double totalWidth, SplitLayoutMode layoutMode,
         bool autoCompress, SplitAlignmentReference linearAlignment, IReadOnlyList<double> gridXOffsets,
-        IReadOnlyList<SplitAlignmentReference> gridAlignments,
+        IReadOnlyList<SplitAlignmentReference> gridAlignments, double layoutWidth, double layoutHeight,
         int frame, int duration, int fps,
         double centerX, double centerY, double rotationOffset, MaskCacheKey transformKey)
     {
@@ -421,6 +436,7 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
         foreach (var maximumWidth in gridMaximumWidths) layoutHash.Add(maximumWidth);
         foreach (var xOffset in gridXOffsets) layoutHash.Add(xOffset);
         foreach (var alignment in gridAlignments) layoutHash.Add(alignment);
+        layoutHash.Add(item.ReverseOrder);
         var color = item.PlacementNumberColor;
         var colorArgb = color.A << 24 | color.R << 16 | color.G << 8 | color.B;
         var key = new OverlayCacheKey(transformKey, description.GroupCount, slotCount, layoutHash.ToHashCode(), colorArgb);
@@ -450,7 +466,7 @@ internal sealed class ExtendedScreenSplitProcessor : VideoEffectProcessorBase
             var width = GetIndividualCropWidth(settings, totalWidth, frame, duration, fps);
             var mask = SplitMaskGeometryBuilder.Create(screenWidth, screenHeight, i, count, width,
                 centerX, centerY, rotationOffset, layoutMode, gridColumns, cropWidths, totalWidth, gridMaximumWidths, gridRowHeights,
-                autoCompress, linearAlignment, gridXOffsets, gridAlignments);
+                autoCompress, linearAlignment, gridXOffsets, gridAlignments, layoutWidth, layoutHeight);
             if (mask.Points.Count < 3) continue;
             var fontSize = Math.Clamp(Math.Min(mask.Width, mask.Height) * 0.24f, 22f, 72f);
             var rect = new Rect(mask.Centroid.X - fontSize, mask.Centroid.Y - fontSize * 0.7f,

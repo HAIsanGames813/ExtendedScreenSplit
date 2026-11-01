@@ -10,41 +10,42 @@ using YukkuriMovieMaker.Player.Video;
 using YukkuriMovieMaker.Player.Video.Effects;
 using YukkuriMovieMaker.Plugin.Brush;
 using YukkuriMovieMaker.Plugin.Effects;
+using YukkuriMovieMaker.Generator;
 
 namespace YMM4.ExtendedScreenSplit;
 
 public enum SplitLayoutMode
 {
-    [Display(Name = "円状")] Circular,
-    [Display(Name = "線状")] Linear,
-    [Display(Name = "グリッド")] Grid,
+    [Display(Name = nameof(Texts.ModeCircular), ResourceType = typeof(Texts))] Circular,
+    [Display(Name = nameof(Texts.ModeLinear), ResourceType = typeof(Texts))] Linear,
+    [Display(Name = nameof(Texts.ModeGrid), ResourceType = typeof(Texts))] Grid,
 }
 
 public enum SplitWidthUnit
 {
-    [Display(Name = "ピクセル/度")]
+    [Display(Name = nameof(Texts.UnitPixelDegree), ResourceType = typeof(Texts))]
     Absolute,
-    [Display(Name = "割合")]
+    [Display(Name = nameof(Texts.UnitProportion), ResourceType = typeof(Texts))]
     Proportion,
 }
 
 public enum GridHeightUnit
 {
-    [Display(Name = "ピクセル")]
+    [Display(Name = nameof(Texts.UnitPixel), ResourceType = typeof(Texts))]
     Pixel,
-    [Display(Name = "割合")]
+    [Display(Name = nameof(Texts.UnitProportion), ResourceType = typeof(Texts))]
     Proportion,
 }
 
 public enum SplitAlignmentReference
 {
-    [Display(Name = "左")] Left,
-    [Display(Name = "中央")] Center,
-    [Display(Name = "右")] Right,
+    [Display(Name = nameof(Texts.AlignLeft), ResourceType = typeof(Texts))] Left,
+    [Display(Name = nameof(Texts.AlignCenter), ResourceType = typeof(Texts))] Center,
+    [Display(Name = nameof(Texts.AlignRight), ResourceType = typeof(Texts))] Right,
 }
 
-[VideoEffect("グループ制御中のアイテムで画面分割(拡張)", ["描画"], ["グループ制御中のアイテムを分割し、自動で切り抜きます"], true, true,
-    IsEffectItemSupported = false, IsAviUtlSupported = false)]
+[VideoEffect(nameof(Texts.EffectName), [VideoEffectCategories.Layout], [nameof(Texts.TagSplit), nameof(Texts.TagGroup), nameof(Texts.TagMask)],
+    IsEffectItemSupported = false, IsAviUtlSupported = false, ResourceType = typeof(Texts))]
 public sealed class ExtendedScreenSplitEffect : VideoEffectBase
 {
     internal const int MaximumItems = 1000;
@@ -53,6 +54,7 @@ public sealed class ExtendedScreenSplitEffect : VideoEffectBase
     private bool useIndividualSettings;
     private bool autoCompress;
     private bool showPlacementNumbers;
+    private bool reverseOrder;
     private System.Windows.Media.Color placementNumberColor = System.Windows.Media.Colors.White;
     private bool outlineOnly;
     private SplitLayoutMode layoutMode;
@@ -74,39 +76,46 @@ public sealed class ExtendedScreenSplitEffect : VideoEffectBase
         EnsureGridRows(gridRowCount);
     }
 
-    public override string Label => "グループ制御中のアイテムで画面分割(拡張)";
+    public override string Label => Texts.EffectName;
 
     [Browsable(false)]
     [System.Text.Json.Serialization.JsonIgnore]
     public int PreviewRevision => previewRevision;
 
-    [Display(GroupName = "分割", Name = "分割数")]
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.SplitCount), ResourceType = typeof(Texts))]
     [AnimationSlider("F0", "", 1, 50)]
     [YukkuriMovieMaker.ItemEditor.CustomVisibilityAttributes.ShowPropertyEditorWhen(nameof(IsNonGridMode), true)]
     public Animation SplitCount { get; } = new(4, 1, 50000000);
 
-    [Display(GroupName = "分割", Name = "並びオフセット", Description = "アイテム番号に加算して移動先をずらします")]
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.ArrangementOffset), Description = nameof(Texts.ArrangementOffsetDescription), ResourceType = typeof(Texts))]
     [AnimationSlider("F0", "", 0, 50)]
     public Animation ArrangementOffset { get; } = new(0, 0, 100000000);
 
-    [Display(GroupName = "分割", Name = "全体角度")]
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.ReverseOrder), ResourceType = typeof(Texts))]
+    [ToggleSlider]
+    public bool ReverseOrder { get => reverseOrder; set => Set(ref reverseOrder, value); }
+
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.CircularTotalAngle), ResourceType = typeof(Texts))]
     [AnimationSlider("F1", "°", 0, 360)]
     [YukkuriMovieMaker.ItemEditor.CustomVisibilityAttributes.ShowPropertyEditorWhen(nameof(IsCircularMode), true)]
     public Animation CircularTotalAngle { get; } = new(360, 0, 360);
 
-    [Display(GroupName = "分割", Name = "全体幅", Description = "0 px の場合は画面全体の幅を使います")]
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.TotalWidth), Description = nameof(Texts.TotalWidthDescription), ResourceType = typeof(Texts))]
     [AnimationSlider("F1", "px", 0, 500)]
-    [YukkuriMovieMaker.ItemEditor.CustomVisibilityAttributes.ShowPropertyEditorWhen(nameof(IsNonCircularMode), true)]
     public Animation TotalWidth { get; } = new(0, 0, 100000000);
 
-    [Display(GroupName = "分割", Name = "分割方法")]
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.TotalHeight), Description = nameof(Texts.TotalHeightDescription), ResourceType = typeof(Texts))]
+    [AnimationSlider("F1", "px", 0, 500)]
+    public Animation TotalHeight { get; } = new(0, 0, 100000000);
+
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.LayoutMode), ResourceType = typeof(Texts))]
     [EnumComboBox]
     public SplitLayoutMode LayoutMode
     {
         get => layoutMode;
         set
         {
-            if (Set(ref layoutMode, value, nameof(LayoutMode), nameof(IsGridMode), nameof(IsNonGridMode),
+            if (Set(ref layoutMode, value, nameof(LayoutMode), nameof(IsGridMode), nameof(IsNonGridMode), nameof(IsLinearMode),
                 nameof(IsCircularMode), nameof(IsNonCircularMode), nameof(CanUseAutoCompress), nameof(GridRowCount), nameof(GridRows)))
             {
                 foreach (var setting in ItemSettings)
@@ -116,67 +125,67 @@ public sealed class ExtendedScreenSplitEffect : VideoEffectBase
         }
     }
 
-    [Display(GroupName = "分割", Name = "基準")]
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.SplitAlignment), ResourceType = typeof(Texts))]
     [EnumComboBox]
-    [YukkuriMovieMaker.ItemEditor.CustomVisibilityAttributes.ShowPropertyEditorWhen(nameof(IsLinearMode), true)]
+    [YukkuriMovieMaker.ItemEditor.CustomVisibilityAttributes.ShowPropertyEditorWhen(nameof(IsNonGridMode), true)]
     public SplitAlignmentReference LinearAlignment
     {
         get => linearAlignment;
         set => Set(ref linearAlignment, value);
     }
 
-    [Display(GroupName = "分割", Name = "中心X")]
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.CenterX), ResourceType = typeof(Texts))]
     [AnimationSlider("F1", "px", -500, 500)]
     public Animation CenterX { get; } = new(0, -100000000, 100000000);
 
-    [Display(GroupName = "分割", Name = "中心Y")]
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.CenterY), ResourceType = typeof(Texts))]
     [AnimationSlider("F1", "px", -500, 500)]
     public Animation CenterY { get; } = new(0, -100000000, 100000000);
 
-    [Display(GroupName = "分割", Name = "回転オフセット")]
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.RotationOffset), ResourceType = typeof(Texts))]
     [AnimationSlider("F1", "°", -360, 360)]
     public Animation RotationOffset { get; } = new(0, -36000000, 36000000);
 
-    [Display(GroupName = "分割", Name = "番号表示", Description = "プレビューに配置先番号を透かし表示します。書き出しには表示されません")]
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.ShowPlacementNumbers), Description = nameof(Texts.ShowPlacementNumbersDescription), ResourceType = typeof(Texts))]
     [ToggleSlider]
     public bool ShowPlacementNumbers { get => showPlacementNumbers; set => Set(ref showPlacementNumbers, value); }
 
-    [Display(GroupName = "分割", Name = "番号の色")]
+    [Display(GroupName = nameof(Texts.SplitGroup), Name = nameof(Texts.NumberColor), ResourceType = typeof(Texts))]
     [ColorPicker]
     public System.Windows.Media.Color PlacementNumberColor { get => placementNumberColor; set => Set(ref placementNumberColor, value); }
 
-    [Display(GroupName = "縁", Name = "太さ")]
+    [Display(GroupName = nameof(Texts.BorderGroup), Name = nameof(Texts.BorderThickness), ResourceType = typeof(Texts))]
     [AnimationSlider("F1", "px", 0, 10)]
     public Animation BorderThickness { get; } = new(3, 0, 500);
 
-    [Display(GroupName = "縁", Name = "ぼかし")]
+    [Display(GroupName = nameof(Texts.BorderGroup), Name = nameof(Texts.BorderBlur), ResourceType = typeof(Texts))]
     [AnimationSlider("F1", "px", 0, 10)]
     public Animation BorderBlur { get; } = new(0, 0, 1000);
 
-    [Display(GroupName = "縁", Name = "縁のみ")]
+    [Display(GroupName = nameof(Texts.BorderGroup), Name = nameof(Texts.OutlineOnly), ResourceType = typeof(Texts))]
     [ToggleSlider]
     public bool OutlineOnly { get => outlineOnly; set => Set(ref outlineOnly, value); }
 
-    [Display(GroupName = "縁/描画", Name = "X")]
+    [Display(GroupName = nameof(Texts.BorderDrawGroup), Name = nameof(Texts.BorderX), ResourceType = typeof(Texts))]
     [AnimationSlider("F1", "px", -50, 50)]
     public Animation BorderX { get; } = new(0, -100000, 100000);
 
-    [Display(GroupName = "縁/描画", Name = "Y")]
+    [Display(GroupName = nameof(Texts.BorderDrawGroup), Name = nameof(Texts.BorderY), ResourceType = typeof(Texts))]
     [AnimationSlider("F1", "px", -50, 50)]
     public Animation BorderY { get; } = new(0, -100000, 100000);
 
-    [Display(GroupName = "縁/描画", Name = "不透明度")]
+    [Display(GroupName = nameof(Texts.BorderDrawGroup), Name = nameof(Texts.BorderOpacity), ResourceType = typeof(Texts))]
     [AnimationSlider("F1", "%", 0, 100)]
     public Animation BorderOpacity { get; } = new(100, 0, 100);
 
-    [Display(GroupName = "縁/描画", Name = "拡大率")]
+    [Display(GroupName = nameof(Texts.BorderDrawGroup), Name = nameof(Texts.BorderZoom), ResourceType = typeof(Texts))]
     [AnimationSlider("F1", "%", 0, 100)]
     public Animation BorderZoom { get; } = new(100, 0, 100000);
 
-    [Display(GroupName = "縁/模様", Name = "模様", AutoGenerateField = true)]
+    [Display(GroupName = nameof(Texts.BorderPatternGroup), Name = nameof(Texts.BorderPattern), AutoGenerateField = true, ResourceType = typeof(Texts))]
     public Brush BorderBrush { get; } = new();
 
-    [Display(GroupName = "グリッド", Name = "段数")]
+    [Display(GroupName = nameof(Texts.GridGroup), Name = nameof(Texts.GridRowCount), ResourceType = typeof(Texts))]
     [YukkuriMovieMaker.ItemEditor.CustomVisibilityAttributes.ShowPropertyEditorWhen(nameof(IsGridMode), true)]
     [TextBoxSlider("F0", "", 1, 100)]
     [Range(1, MaximumGridRows)]
@@ -190,7 +199,7 @@ public sealed class ExtendedScreenSplitEffect : VideoEffectBase
         }
     }
 
-    [Display(GroupName = "グリッド", Name = "段ごとの設定")]
+    [Display(GroupName = nameof(Texts.GridGroup), Name = nameof(Texts.GridRowSettings), ResourceType = typeof(Texts))]
     [GridRowsEditor]
     [YukkuriMovieMaker.ItemEditor.CustomVisibilityAttributes.ShowPropertyEditorWhen(nameof(IsGridMode), true)]
     public ImmutableList<GridRowSettings> GridRows
@@ -206,7 +215,7 @@ public sealed class ExtendedScreenSplitEffect : VideoEffectBase
         }
     }
 
-    [Display(GroupName = "アイテム", Name = "個別設定")]
+    [Display(GroupName = nameof(Texts.ItemGroup), Name = nameof(Texts.UseIndividualSettings), ResourceType = typeof(Texts))]
     [ToggleSlider]
     public bool UseIndividualSettings
     {
@@ -219,7 +228,7 @@ public sealed class ExtendedScreenSplitEffect : VideoEffectBase
         }
     }
 
-    [Display(GroupName = "アイテム", Name = "自動圧縮", Description = "未指定の幅や段の高さを残り領域へ均等に収めます")]
+    [Display(GroupName = nameof(Texts.ItemGroup), Name = nameof(Texts.AutoCompress), Description = nameof(Texts.AutoCompressDescription), ResourceType = typeof(Texts))]
     [ToggleSlider]
     [YukkuriMovieMaker.ItemEditor.CustomVisibilityAttributes.ShowPropertyEditorWhen(nameof(CanUseAutoCompress), true)]
     public bool AutoCompress { get => autoCompress; set => Set(ref autoCompress, value); }
@@ -242,7 +251,7 @@ public sealed class ExtendedScreenSplitEffect : VideoEffectBase
     [Browsable(false)]
     public bool CanUseAutoCompress => UseIndividualSettings || IsGridMode;
 
-    [Display(GroupName = "アイテム", Name = "アイテム別設定")]
+    [Display(GroupName = nameof(Texts.ItemGroup), Name = nameof(Texts.ItemSettings), ResourceType = typeof(Texts))]
     [SplitItemsEditor]
     [YukkuriMovieMaker.ItemEditor.CustomVisibilityAttributes.ShowPropertyEditorWhen(nameof(UseIndividualSettings), true)]
     public ImmutableList<SplitItemSettings> ItemSettings
@@ -276,6 +285,7 @@ public sealed class ExtendedScreenSplitEffect : VideoEffectBase
         yield return CenterY;
         yield return RotationOffset;
         yield return ArrangementOffset;
+        yield return TotalHeight;
         yield return BorderThickness;
         yield return BorderBlur;
         yield return BorderX;
@@ -443,27 +453,30 @@ public sealed class SplitItemSettings : Animatable
     }
 
     [Browsable(false)]
-    public int ItemNumber { get => itemNumber; set => Set(ref itemNumber, value); }
+    public int ItemNumber { get => itemNumber; set => Set(ref itemNumber, value, nameof(ItemNumber), nameof(ItemListDisplayName)); }
+
+    [Browsable(false)]
+    public string ItemListDisplayName => string.Format(System.Globalization.CultureInfo.CurrentCulture, Texts.ItemListFormat, ItemNumber);
 
     [Browsable(false)]
     public string Remark { get => remark; set => Set(ref remark, value ?? string.Empty); }
 
-    [ItemCategory("X")]
+    [ItemCategory(nameof(Texts.OffsetX))]
     [AnimationSlider("F1", "px", -500, 500)]
     public Animation OffsetX { get; } = new(0, -100000, 100000);
 
-    [ItemCategory("Y")]
+    [ItemCategory(nameof(Texts.OffsetY))]
     [AnimationSlider("F1", "px", -500, 500)]
     public Animation OffsetY { get; } = new(0, -100000, 100000);
 
-    [ItemCategory("拡大率", "100%で元の拡大率を維持します")]
+    [ItemCategory(nameof(Texts.ZoomPercent), nameof(Texts.ZoomPercentDescription))]
     [AnimationSlider("F1", "%", 0, 100)]
     public Animation ZoomPercent { get; } = new(100, 0, 10000000);
 
-    [ItemCategory("回転角")]
+    [ItemCategory(nameof(Texts.Rotation))]
     [AnimationSlider("F1", "°", -360, 360)]
     public Animation Rotation { get; } = new(0, -36000000, 36000000);
-    [ItemCategory("単位")]
+    [ItemCategory(nameof(Texts.WidthUnit))]
     [EnumComboBox]
     public SplitWidthUnit WidthUnit
     {
@@ -477,12 +490,12 @@ public sealed class SplitItemSettings : Animatable
     [Browsable(false)]
     public bool IsProportionWidth => WidthUnit == SplitWidthUnit.Proportion;
 
-    [ItemCategory("分割幅")]
+    [ItemCategory(nameof(Texts.CropWidth))]
     [ConditionalUnitAnimationSlider("F1", "px", "°", nameof(LayoutMode), SplitLayoutMode.Circular, 0, 500)]
     [YukkuriMovieMaker.ItemEditor.CustomVisibilityAttributes.ShowPropertyEditorWhen(nameof(IsAbsoluteWidth), true)]
     public Animation CropWidth { get; } = new(0, 0, 100000000);
 
-    [ItemCategory("分割幅")]
+    [ItemCategory(nameof(Texts.ProportionalCropWidth))]
     [AnimationSlider("F1", "%", 0, 100)]
     [YukkuriMovieMaker.ItemEditor.CustomVisibilityAttributes.ShowPropertyEditorWhen(nameof(IsProportionWidth), true)]
     public Animation ProportionalCropWidth { get; } = new(0, 0, 100);
@@ -526,14 +539,14 @@ public sealed class GridRowSettings : Animatable
 
     [Browsable(false)]
     [System.Text.Json.Serialization.JsonIgnore]
-    public string DisplayName => $"{RowNumber + 1}段目";
+    public string DisplayName => string.Format(System.Globalization.CultureInfo.CurrentCulture, Texts.RowGroupFormat, RowNumber + 1);
 
     [Browsable(false)]
     public string Remark { get => remark; set => Set(ref remark, value ?? string.Empty); }
 
     [GridRowColumnDisplay]
     [YukkuriMovieMaker.ItemEditor.CustomVisibilityAttributes.ShowPropertyEditorWhen(nameof(IsGridMode), true)]
-    [TextBoxSlider("F0", "列", 1, 10)]
+    [TextBoxSlider("F0", "", 1, 10)]
     [Range(1, ExtendedScreenSplitEffect.MaximumItems)]
     public int Columns { get => columns; set => Set(ref columns, Math.Clamp(value, 1, ExtendedScreenSplitEffect.MaximumItems)); }
 
@@ -609,8 +622,8 @@ public sealed class GridRowSettings : Animatable
 internal sealed class ItemCategoryAttribute(string name, string? description = null) : CustomDisplayAttributeBase
 {
     public override string? GetGroupName(object instance) => null;
-    public override string? GetName(object instance) => name;
-    public override string? GetDescription(object instance) => description;
+    public override string? GetName(object instance) => Texts.GetString(name);
+    public override string? GetDescription(object instance) => description is null ? null : Texts.GetString(description);
     public override int? GetOrder(object instance) => null;
     public override bool? GetAutoGenerateField(object instance) => null;
     public override bool? GetAutoGenerateFilter(object instance) =>
@@ -621,8 +634,8 @@ internal sealed class ItemCategoryAttribute(string name, string? description = n
 internal sealed class GridRowColumnDisplayAttribute : CustomDisplayAttributeBase
 {
     public override string? GetGroupName(object instance) => null;
-    public override string? GetName(object instance) => "列数";
-    public override string? GetDescription(object instance) => "この段に配置する列数";
+    public override string? GetName(object instance) => Texts.Columns;
+    public override string? GetDescription(object instance) => Texts.ColumnsDescription;
     public override int? GetOrder(object instance) => null;
     public override bool? GetAutoGenerateField(object instance) => null;
     public override bool? GetAutoGenerateFilter(object instance) =>
@@ -633,8 +646,8 @@ internal sealed class GridRowColumnDisplayAttribute : CustomDisplayAttributeBase
 internal sealed class GridRowWidthDisplayAttribute : CustomDisplayAttributeBase
 {
     public override string? GetGroupName(object instance) => null;
-    public override string? GetName(object instance) => "全体幅上限";
-    public override string? GetDescription(object instance) => "0 px の場合は全体幅を使います";
+    public override string? GetName(object instance) => Texts.MaximumWidth;
+    public override string? GetDescription(object instance) => Texts.MaximumWidthDescription;
     public override int? GetOrder(object instance) => null;
     public override bool? GetAutoGenerateField(object instance) => null;
     public override bool? GetAutoGenerateFilter(object instance) =>
@@ -645,8 +658,8 @@ internal sealed class GridRowWidthDisplayAttribute : CustomDisplayAttributeBase
 internal sealed class GridRowXOffsetDisplayAttribute : CustomDisplayAttributeBase
 {
     public override string? GetGroupName(object instance) => null;
-    public override string? GetName(object instance) => "Xオフセット";
-    public override string? GetDescription(object instance) => null;
+    public override string? GetName(object instance) => Texts.XOffset;
+    public override string? GetDescription(object instance) => Texts.XOffsetDescription;
     public override int? GetOrder(object instance) => null;
     public override bool? GetAutoGenerateField(object instance) => null;
     public override bool? GetAutoGenerateFilter(object instance) =>
@@ -657,8 +670,8 @@ internal sealed class GridRowXOffsetDisplayAttribute : CustomDisplayAttributeBas
 internal sealed class GridRowAlignmentDisplayAttribute : CustomDisplayAttributeBase
 {
     public override string? GetGroupName(object instance) => null;
-    public override string? GetName(object instance) => "基準";
-    public override string? GetDescription(object instance) => "この段を全体幅の左・中央・右のどこにそろえるか";
+    public override string? GetName(object instance) => Texts.RowAlignment;
+    public override string? GetDescription(object instance) => Texts.RowAlignmentDescription;
     public override int? GetOrder(object instance) => null;
     public override bool? GetAutoGenerateField(object instance) => null;
     public override bool? GetAutoGenerateFilter(object instance) =>
@@ -669,7 +682,7 @@ internal sealed class GridRowAlignmentDisplayAttribute : CustomDisplayAttributeB
 internal sealed class GridRowHeightUnitDisplayAttribute : CustomDisplayAttributeBase
 {
     public override string? GetGroupName(object instance) => null;
-    public override string? GetName(object instance) => "縦幅単位";
+    public override string? GetName(object instance) => Texts.HeightUnit;
     public override string? GetDescription(object instance) => null;
     public override int? GetOrder(object instance) => null;
     public override bool? GetAutoGenerateField(object instance) => null;
@@ -681,8 +694,8 @@ internal sealed class GridRowHeightUnitDisplayAttribute : CustomDisplayAttribute
 internal sealed class GridRowHeightDisplayAttribute : CustomDisplayAttributeBase
 {
     public override string? GetGroupName(object instance) => null;
-    public override string? GetName(object instance) => "縦幅";
-    public override string? GetDescription(object instance) => "0 の場合は自動計算します";
+    public override string? GetName(object instance) => ((GridRowSettings)instance).HeightUnit == GridHeightUnit.Pixel ? Texts.HeightPixels : Texts.HeightProportion;
+    public override string? GetDescription(object instance) => Texts.HeightDescription;
     public override int? GetOrder(object instance) => null;
     public override bool? GetAutoGenerateField(object instance) => null;
     public override bool? GetAutoGenerateFilter(object instance) =>

@@ -27,7 +27,7 @@
                         <TextBox Grid.Column="1"
                                  MinWidth="80"
                                  VerticalContentAlignment="Center"
-                                 ToolTip="この段の備考"
+                                 ToolTip="{Binding RowRemarkTooltip}"
                                  Text="{Binding Remark, UpdateSourceTrigger=PropertyChanged}"
                                  GotKeyboardFocus="Remark_GotKeyboardFocus"
                                  LostKeyboardFocus="Remark_LostKeyboardFocus" />

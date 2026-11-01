@@ -19,6 +19,7 @@ public partial class GridRowsEditorControl : UserControl, IPropertyEditorControl
     }
 
     public IEnumerable<GridRowSettings> Rows => effect?.GridRows.Take(effect.GridRowCount) ?? [];
+    public string RowRemarkTooltip => Texts.RowRemarkTooltip;
 
     public GridRowSettings? SelectedRow
     {
@@ -38,8 +39,8 @@ public partial class GridRowsEditorControl : UserControl, IPropertyEditorControl
     public string? SelectedGroupName => SelectedRow is null
         ? null
         : string.IsNullOrWhiteSpace(SelectedRow.Remark)
-            ? $"{SelectedRow.RowNumber + 1}段目"
-            : $"{SelectedRow.RowNumber + 1}段目/{SelectedRow.Remark}";
+            ? string.Format(System.Globalization.CultureInfo.CurrentCulture, Texts.RowGroupFormat, SelectedRow.RowNumber + 1)
+            : string.Format(System.Globalization.CultureInfo.CurrentCulture, Texts.RowRemarkGroupFormat, SelectedRow.RowNumber + 1, SelectedRow.Remark);
 
     public event EventHandler? BeginEdit;
     public event EventHandler? EndEdit;

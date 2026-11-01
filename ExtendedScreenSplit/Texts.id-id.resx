@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+<data name="CurrentCulture" xml:space="preserve"><value>id-id</value></data>
+<data name="EffectName" xml:space="preserve"><value>Pembagian Layar Lanjutan untuk Item Grup</value></data>
+<data name="EffectDescription" xml:space="preserve"><value>Membagi dan mengatur item di dalam kontrol grup</value></data>
+<data name="TagSplit" xml:space="preserve"><value>Pembagian</value></data>
+<data name="TagGroup" xml:space="preserve"><value>Grup</value></data>
+<data name="TagMask" xml:space="preserve"><value>Mask</value></data>
+<data name="ModeCircular" xml:space="preserve"><value>Melingkar</value></data>
+<data name="ModeLinear" xml:space="preserve"><value>Linear</value></data>
+<data name="ModeGrid" xml:space="preserve"><value>Kisi</value></data>
+<data name="UnitPixelDegree" xml:space="preserve"><value>Piksel/Derajat</value></data>
+<data name="UnitProportion" xml:space="preserve"><value>Persentase</value></data>
+<data name="UnitPixel" xml:space="preserve"><value>Piksel</value></data>
+<data name="AlignLeft" xml:space="preserve"><value>Kiri</value></data>
+<data name="AlignCenter" xml:space="preserve"><value>Tengah</value></data>
+<data name="AlignRight" xml:space="preserve"><value>Kanan</value></data>
+<data name="SplitAlignment" xml:space="preserve"><value>Referensi</value></data>
+<data name="SplitGroup" xml:space="preserve"><value>Pembagian</value></data>
+<data name="BorderGroup" xml:space="preserve"><value>Batas</value></data>
+<data name="BorderDrawGroup" xml:space="preserve"><value>Batas/Gambar</value></data>
+<data name="BorderPatternGroup" xml:space="preserve"><value>Batas/Pola</value></data>
+<data name="GridGroup" xml:space="preserve"><value>Kisi</value></data>
+<data name="ItemGroup" xml:space="preserve"><value>Item</value></data>
+<data name="SplitCount" xml:space="preserve"><value>Jumlah pembagian</value></data>
+<data name="ArrangementOffset" xml:space="preserve"><value>Offset susunan</value></data>
+<data name="ArrangementOffsetDescription" xml:space="preserve"><value>Menggeser item pertama yang tampil. Item yang melebihi slot yang tersedia disembunyikan</value></data>
+<data name="ReverseOrder" xml:space="preserve"><value>Balik urutan</value></data>
+<data name="CircularTotalAngle" xml:space="preserve"><value>Sudut total</value></data>
+<data name="TotalWidth" xml:space="preserve"><value>Lebar horizontal total</value></data>
+<data name="TotalWidthDescription" xml:space="preserve"><value>Menggunakan seluruh lebar layar jika diatur ke 0 px</value></data>
+<data name="TotalHeight" xml:space="preserve"><value>Tinggi vertikal total</value></data>
+<data name="TotalHeightDescription" xml:space="preserve"><value>Menggunakan seluruh tinggi layar jika diatur ke 0 px</value></data>
+<data name="LayoutMode" xml:space="preserve"><value>Tata letak</value></data>
+<data name="Alignment" xml:space="preserve"><value>Perataan</value></data>
+<data name="CenterX" xml:space="preserve"><value>Pusat X</value></data>
+<data name="CenterY" xml:space="preserve"><value>Pusat Y</value></data>
+<data name="RotationOffset" xml:space="preserve"><value>Offset rotasi</value></data>
+<data name="ShowPlacementNumbers" xml:space="preserve"><value>Tampilkan nomor posisi</value></data>
+<data name="ShowPlacementNumbersDescription" xml:space="preserve"><value>Tampilkan nomor tujuan pada pratinjau. Nomor tidak disertakan saat ekspor</value></data>
+<data name="NumberColor" xml:space="preserve"><value>Warna nomor</value></data>
+<data name="BorderThickness" xml:space="preserve"><value>Ketebalan</value></data>
+<data name="BorderBlur" xml:space="preserve"><value>Kabur</value></data>
+<data name="OutlineOnly" xml:space="preserve"><value>Batas saja</value></data>
+<data name="BorderX" xml:space="preserve"><value>X</value></data>
+<data name="BorderY" xml:space="preserve"><value>Y</value></data>
+<data name="BorderOpacity" xml:space="preserve"><value>Opasitas</value></data>
+<data name="BorderZoom" xml:space="preserve"><value>Skala</value></data>
+<data name="BorderPattern" xml:space="preserve"><value>Pola</value></data>
+<data name="GridRowCount" xml:space="preserve"><value>Jumlah baris</value></data>
+<data name="GridRowSettings" xml:space="preserve"><value>Setelan per baris</value></data>
+<data name="UseIndividualSettings" xml:space="preserve"><value>Setelan individual</value></data>
+<data name="AutoCompress" xml:space="preserve"><value>Kompresi otomatis</value></data>
+<data name="AutoCompressDescription" xml:space="preserve"><value>Membagi lebar dan tinggi baris yang belum ditentukan secara merata ke area tersisa</value></data>
+<data name="ItemSettings" xml:space="preserve"><value>Setelan per item</value></data>
+<data name="OffsetX" xml:space="preserve"><value>X</value></data>
+<data name="OffsetY" xml:space="preserve"><value>Y</value></data>
+<data name="ZoomPercent" xml:space="preserve"><value>Skala</value></data>
+<data name="ZoomPercentDescription" xml:space="preserve"><value>100% mempertahankan skala asli</value></data>
+<data name="Rotation" xml:space="preserve"><value>Sudut rotasi</value></data>
+<data name="WidthUnit" xml:space="preserve"><value>Satuan</value></data>
+<data name="CropWidth" xml:space="preserve"><value>Lebar slot</value></data>
+<data name="ProportionalCropWidth" xml:space="preserve"><value>Lebar slot</value></data>
+<data name="Columns" xml:space="preserve"><value>Jumlah kolom</value></data>
+<data name="ColumnsDescription" xml:space="preserve"><value>Jumlah kolom pada baris ini</value></data>
+<data name="MaximumWidth" xml:space="preserve"><value>Batas lebar total</value></data>
+<data name="MaximumWidthDescription" xml:space="preserve"><value>Batas lebar total untuk baris ini. Gunakan lebar tata letak jika diatur ke 0 px</value></data>
+<data name="XOffset" xml:space="preserve"><value>Offset X</value></data>
+<data name="XOffsetDescription" xml:space="preserve"><value>Menggeser baris ini secara horizontal</value></data>
+<data name="RowAlignment" xml:space="preserve"><value>Perataan</value></data>
+<data name="RowAlignmentDescription" xml:space="preserve"><value>Menyelaraskan baris ini ke kiri tengah atau kanan dari lebar total</value></data>
+<data name="HeightUnit" xml:space="preserve"><value>Satuan tinggi</value></data>
+<data name="HeightPixels" xml:space="preserve"><value>Tinggi</value></data>
+<data name="HeightProportion" xml:space="preserve"><value>Tinggi</value></data>
+<data name="HeightDescription" xml:space="preserve"><value>Dihitung otomatis jika diatur ke 0</value></data>
+<data name="ItemListFormat" xml:space="preserve"><value>Item {0}</value></data>
+<data name="ItemRemarkTooltip" xml:space="preserve"><value>Catatan item ini</value></data>
+<data name="RowRemarkTooltip" xml:space="preserve"><value>Catatan baris ini</value></data>
+<data name="ItemGroupFormat" xml:space="preserve"><value>Item {0}</value></data>
+<data name="ItemRemarkGroupFormat" xml:space="preserve"><value>Item {0}/{1}</value></data>
+<data name="RowGroupFormat" xml:space="preserve"><value>Baris {0}</value></data>
+<data name="RowRemarkGroupFormat" xml:space="preserve"><value>Baris {0}/{1}</value></data>
+</root>
