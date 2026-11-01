@@ -4,16 +4,179 @@ using Vortice;
 namespace YMM4.ExtendedScreenSplit;
 
 internal readonly record struct SplitMaskGeometry(IReadOnlyList<Vector2> Points, Vector2 Centroid, float Width, float Height);
+internal readonly record struct SplitDividerLine(Vector2 Start, Vector2 End);
 
 internal static class SplitMaskGeometryBuilder
 {
+    public static IReadOnlyList<SplitDividerLine> CreateDividers(float screenWidth, float screenHeight, int count,
+        double centerX, double centerY, double rotationDegrees, SplitLayoutMode mode,
+        IReadOnlyList<int>? gridColumns = null, IReadOnlyList<double>? cropWidths = null, double totalWidth = 0,
+        IReadOnlyList<double>? gridMaximumWidths = null, IReadOnlyList<double>? gridRowHeights = null, bool autoCompress = false,
+        SplitAlignmentReference linearAlignment = SplitAlignmentReference.Center,
+        IReadOnlyList<double>? gridXOffsets = null, IReadOnlyList<SplitAlignmentReference>? gridAlignments = null)
+    {
+        var lines = new List<SplitDividerLine>();
+        var cx = (float)centerX;
+        var cy = (float)centerY;
+        var diagonal = MathF.Sqrt(screenWidth * screenWidth + screenHeight * screenHeight) * 2f;
+        if (mode == SplitLayoutMode.Circular)
+        {
+            var span = (float)Math.Clamp(totalWidth, 0, 360);
+            var widths = ResolveWidths(0, count, span, cropWidths, autoCompress);
+            var consumed = 0f;
+            var fullCircle = span >= 360f - 0.0001f && widths.Sum() >= 360f - 0.0001f;
+            for (var i = 0; i < count; i++)
+            {
+                if ((i > 0 || fullCircle) && consumed < 360f - 0.0001f)
+                {
+                    var angle = (rotationDegrees + consumed - 90.0) * Math.PI / 180.0;
+                    lines.Add(new(new(cx, cy), new(cx + diagonal * (float)Math.Cos(angle), cy + diagonal * (float)Math.Sin(angle))));
+                }
+                consumed += Math.Min(widths[i], Math.Max(0, 360f - consumed));
+            }
+        }
+        else if (mode == SplitLayoutMode.Linear)
+        {
+            var radians = (float)(rotationDegrees * Math.PI / 180.0);
+            var normal = new Vector2(MathF.Cos(radians), MathF.Sin(radians));
+            var tangent = new Vector2(-normal.Y, normal.X);
+            var span = totalWidth > 0
+                ? (float)totalWidth
+                : screenWidth * MathF.Abs(normal.X) + screenHeight * MathF.Abs(normal.Y);
+            var widths = ResolveWidths(0, count, span, cropWidths, autoCompress);
+            var position = GetAlignedStart(widths.Sum(), span, linearAlignment);
+            for (var i = 0; i < count - 1; i++)
+            {
+                position += widths[i];
+                var center = normal * position + new Vector2(cx, cy);
+                lines.Add(new(center - tangent * diagonal, center + tangent * diagonal));
+            }
+        }
+        else if (gridColumns is not null && gridColumns.Count > 0)
+        {
+            var rows = Math.Min(gridColumns.Count, ExtendedScreenSplitEffect.MaximumItems);
+            var rowHeights = ResolveWidths(0, rows, screenHeight, gridRowHeights, autoCompress);
+            var rowWidths = new float[rows][];
+            var rowActualWidths = new float[rows];
+            for (var row = 0; row < rows; row++)
+            {
+                var columns = Math.Clamp(gridColumns[row], 1, ExtendedScreenSplitEffect.MaximumItems);
+                var maximum = gridMaximumWidths is not null && row < gridMaximumWidths.Count ? gridMaximumWidths[row] : 0;
+                var rowSpan = (float)(maximum > 0 ? Math.Min(totalWidth, maximum) : totalWidth);
+                rowWidths[row] = ResolveWidths(gridColumns.Take(row).Sum(), columns, rowSpan, cropWidths, autoCompress);
+                var actual = rowWidths[row].Sum();
+                if (maximum > 0 && actual > maximum && actual > 0)
+                {
+                    var scale = (float)(maximum / actual);
+                    for (var col = 0; col < rowWidths[row].Length; col++) rowWidths[row][col] *= scale;
+                    actual = (float)maximum;
+                }
+                rowActualWidths[row] = actual;
+            }
+
+            var totalHeight = rowHeights.Sum();
+            var top = -totalHeight / 2f;
+            for (var row = 0; row < rows; row++)
+            {
+                var widths = rowWidths[row];
+                var alignment = gridAlignments is not null && row < gridAlignments.Count ? gridAlignments[row] : SplitAlignmentReference.Center;
+                var xOffset = gridXOffsets is not null && row < gridXOffsets.Count ? (float)gridXOffsets[row] : 0;
+                var left = GetAlignedStart(rowActualWidths[row], (float)totalWidth, alignment) + xOffset;
+                for (var col = 0; col < widths.Length - 1; col++)
+                {
+                    left += widths[col];
+                    AddTransformedLine(lines, new(left, top), new(left, top + rowHeights[row]), rotationDegrees, cx, cy);
+                }
+                top += rowHeights[row];
+                if (row < rows - 1)
+                {
+                    var nextAlignment = gridAlignments is not null && row + 1 < gridAlignments.Count ? gridAlignments[row + 1] : SplitAlignmentReference.Center;
+                    var nextXOffset = gridXOffsets is not null && row + 1 < gridXOffsets.Count ? (float)gridXOffsets[row + 1] : 0;
+                    var currentLeft = GetAlignedStart(rowActualWidths[row], (float)totalWidth, alignment) + xOffset;
+                    var currentRight = currentLeft + rowActualWidths[row];
+                    var nextLeft = GetAlignedStart(rowActualWidths[row + 1], (float)totalWidth, nextAlignment) + nextXOffset;
+                    var nextRight = nextLeft + rowActualWidths[row + 1];
+                    var seamLeft = Math.Max(currentLeft, nextLeft);
+                    var seamRight = Math.Min(currentRight, nextRight);
+                    if (seamRight > seamLeft)
+                        AddTransformedLine(lines, new(seamLeft, top), new(seamRight, top), rotationDegrees, cx, cy);
+                }
+            }
+        }
+        return lines
+            .Select(line => TryClipLine(line, -screenWidth / 2f, -screenHeight / 2f, screenWidth / 2f, screenHeight / 2f, out var clipped)
+                ? clipped
+                : (SplitDividerLine?)null)
+            .Where(line => line.HasValue)
+            .Select(line => line!.Value)
+            .ToArray();
+    }
+
+    private static bool TryClipLine(SplitDividerLine line, float left, float top, float right, float bottom, out SplitDividerLine clipped)
+    {
+        var delta = line.End - line.Start;
+        var t0 = 0f;
+        var t1 = 1f;
+        if (!ClipTest(-delta.X, line.Start.X - left, ref t0, ref t1) ||
+            !ClipTest(delta.X, right - line.Start.X, ref t0, ref t1) ||
+            !ClipTest(-delta.Y, line.Start.Y - top, ref t0, ref t1) ||
+            !ClipTest(delta.Y, bottom - line.Start.Y, ref t0, ref t1))
+        {
+            clipped = default;
+            return false;
+        }
+        clipped = new(line.Start + delta * t0, line.Start + delta * t1);
+        return true;
+    }
+
+    private static bool ClipTest(float p, float q, ref float t0, ref float t1)
+    {
+        if (MathF.Abs(p) < float.Epsilon) return q >= 0;
+        var ratio = q / p;
+        if (p < 0)
+        {
+            if (ratio > t1) return false;
+            if (ratio > t0) t0 = ratio;
+        }
+        else
+        {
+            if (ratio < t0) return false;
+            if (ratio < t1) t1 = ratio;
+        }
+        return true;
+    }
+
+    private static void AddTransformedLine(List<SplitDividerLine> lines, Vector2 start, Vector2 end,
+        double rotationDegrees, float cx, float cy)
+    {
+        var transform = Matrix3x2.CreateRotation((float)(rotationDegrees * Math.PI / 180.0));
+        var offset = new Vector2(cx, cy);
+        lines.Add(new(Vector2.Transform(start, transform) + offset, Vector2.Transform(end, transform) + offset));
+    }
+
+    private static float GetAlignedStart(float contentWidth, float referenceWidth, SplitAlignmentReference alignment) =>
+        alignment switch
+        {
+            SplitAlignmentReference.Left => -referenceWidth / 2f,
+            SplitAlignmentReference.Right => referenceWidth / 2f - contentWidth,
+            _ => -contentWidth / 2f,
+        };
+
     public static SplitMaskGeometry Create(float screenWidth, float screenHeight, int index, int count, double cropWidth,
         double centerX, double centerY, double rotationDegrees, SplitLayoutMode mode, IReadOnlyList<int>? gridColumns = null,
         IReadOnlyList<double>? cropWidths = null, double totalWidth = 0, IReadOnlyList<double>? gridMaximumWidths = null,
-        IReadOnlyList<double>? gridRowHeights = null, bool autoCompress = false)
+        IReadOnlyList<double>? gridRowHeights = null, bool autoCompress = false,
+        SplitAlignmentReference linearAlignment = SplitAlignmentReference.Center,
+        IReadOnlyList<double>? gridXOffsets = null, IReadOnlyList<SplitAlignmentReference>? gridAlignments = null)
     {
         // Group controlled inputs may have different visible bounds. Build every mask
         // against the project canvas so transparent margins cannot change the split.
+        // Items beyond the configured split count reuse slots from the beginning.
+        // Normalize here as well as in the processor so every layout mode (including
+        // circular and linear) keeps the same cyclic behavior.
+        if (count <= 0)
+            return new([], Vector2.Zero, 0, 0);
+        index = ((index % count) + count) % count;
         var halfWidth = screenWidth / 2f;
         var cx = (float)centerX;
         var cy = (float)centerY;
@@ -24,6 +187,8 @@ internal static class SplitMaskGeometryBuilder
                 return new([], Vector2.Zero, 0, 0);
             var rows = gridColumns.Count;
             var rowMaximumWidth = gridMaximumWidths is not null && row < gridMaximumWidths.Count ? gridMaximumWidths[row] : 0;
+            var rowXOffset = gridXOffsets is not null && row < gridXOffsets.Count ? (float)gridXOffsets[row] : 0;
+            var rowAlignment = gridAlignments is not null && row < gridAlignments.Count ? gridAlignments[row] : SplitAlignmentReference.Center;
             var rowTotalWidth = (float)(rowMaximumWidth > 0 ? Math.Min(totalWidth, rowMaximumWidth) : totalWidth);
             var rowStartIndex = gridColumns.Take(row).Sum();
             var rowWidths = ResolveWidths(rowStartIndex, columns, rowTotalWidth, cropWidths, autoCompress);
@@ -38,7 +203,7 @@ internal static class SplitMaskGeometryBuilder
             var rowHeights = ResolveWidths(0, rows, screenHeight, gridRowHeights, autoCompress);
             var actualHeight = rowHeights.Sum();
             var cellHeight = rowHeights[row];
-            var left = -actualWidth / 2f;
+            var left = GetAlignedStart(actualWidth, (float)totalWidth, rowAlignment) + rowXOffset;
             for (var previousColumn = 0; previousColumn < column; previousColumn++)
                 left += rowWidths[previousColumn];
             var top = -actualHeight / 2f;
@@ -81,7 +246,7 @@ internal static class SplitMaskGeometryBuilder
             var projectedSpan = totalWidth > 0 ? (float)totalWidth : screenWidth * MathF.Abs(normal.X) + screenHeight * MathF.Abs(normal.Y);
             var resolvedWidths = ResolveWidths(0, count, projectedSpan, cropWidths, autoCompress);
             var width = resolvedWidths[index];
-            var projectionStart = -projectedSpan / 2f;
+            var projectionStart = GetAlignedStart(resolvedWidths.Sum(), projectedSpan, linearAlignment);
             for (var previousIndex = 0; previousIndex < index; previousIndex++)
                 projectionStart += resolvedWidths[previousIndex];
             var projectionCenter = projectionStart + width / 2f;
